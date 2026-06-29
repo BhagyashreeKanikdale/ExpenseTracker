@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
-import ProtectedRoute from "./components/ProtectedRoute";
+import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Dashboard from "./Pages/Dashboard";
 import AddExpense from "./Pages/AddExpense";
@@ -9,7 +8,7 @@ import History from "./Pages/History";
 import Reports from "./Pages/Reports";
 import Profile from "./Pages/Profile";
 import NotFound from "./Pages/NotFound";
-import Login from "./Pages/Login";
+import ProtectedRoute from "./Components/ProtectedRoute"; 
 
 function App() {
   return (
