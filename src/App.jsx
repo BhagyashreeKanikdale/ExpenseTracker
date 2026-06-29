@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./Pages/Login";
-import Register from "./Pages/Register";
-import Dashboard from "./Pages/Dashboard";
-import AddExpense from "./Pages/AddExpense";
-import AddIncome from "./Pages/AddIncome";
-import History from "./Pages/History";
-import Reports from "./Pages/Reports";
-import Profile from "./Pages/Profile";
-import NotFound from "./Pages/NotFound";
-import ProtectedRoute from "./Components/ProtectedRoute"; 
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import AddExpense from "./pages/AddExpense";
+import AddIncome from "./pages/AddIncome";
+import History from "./pages/History";
+import Reports from "./pages/Reports";
+import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute"; 
 
 function App() {
   return (
