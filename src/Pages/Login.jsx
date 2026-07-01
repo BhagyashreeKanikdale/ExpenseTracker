@@ -1,189 +1,161 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  Wallet,
-} from "lucide-react";
+import { FaEye, FaEyeSlash, FaWallet } from "react-icons/fa";
 
-const Login = () => {
+export default function Login() {
   const navigate = useNavigate();
 
-  const [showPassword, setShowPassword] = useState(false);
-
-  const [loginData, setLoginData] = useState({
+  const [formData, setFormData] = useState({
     email: "",
     password: "",
+    remember: false,
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
-    setLoginData({
-      ...loginData,
-      [e.target.name]: e.target.value,
+    const { name, value, type, checked } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Temporary Authentication
-    localStorage.setItem("isLoggedIn", "true");
+    setLoading(true);
 
-    alert("Login Successful!");
+    try {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    navigate("/dashboard");
+      console.log(formData);
+
+      alert("Login Successful!");
+
+      navigate("/dashboard");
+    } catch (err) {
+      alert("Login Failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 flex items-center justify-center p-4">
 
-      <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl">
+      <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl p-8">
 
         {/* Logo */}
-
-        <div className="flex justify-center">
-
-          <div className="rounded-full bg-blue-100 p-4">
-
-            <Wallet
-              size={45}
-              className="text-blue-600"
-            />
-
+        <div className="flex justify-center mb-5">
+          <div className="bg-indigo-600 text-white p-4 rounded-full">
+            <FaWallet size={28} />
           </div>
-
         </div>
 
-        <h1 className="mt-6 text-center text-3xl font-bold text-slate-800">
+        <h1 className="text-4xl font-bold text-center text-gray-800">
           Welcome Back
         </h1>
 
-        <p className="mt-2 text-center text-gray-500">
-          Login to manage your expenses.
+        <p className="text-center text-gray-500 mt-2 mb-8">
+          Login to your Expense Tracker
         </p>
 
-        {/* Form */}
-
-        <form
-          onSubmit={handleSubmit}
-          className="mt-8 space-y-5"
-        >
+        <form onSubmit={handleSubmit} className="space-y-5">
 
           {/* Email */}
-
           <div>
-
-            <label className="mb-2 block font-medium">
-              Email
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Email Address
             </label>
 
-            <div className="relative">
-
-              <Mail
-                size={20}
-                className="absolute left-4 top-3 text-gray-400"
-              />
-
-              <input
-                type="email"
-                name="email"
-                value={loginData.email}
-                onChange={handleChange}
-                placeholder="Enter email"
-                required
-                className="w-full rounded-xl border border-gray-300 py-3 pl-12 pr-4 outline-none focus:border-blue-500"
-              />
-
-            </div>
-
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+            />
           </div>
 
           {/* Password */}
-
           <div>
-
-            <label className="mb-2 block font-medium">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Password
             </label>
 
             <div className="relative">
 
-              <Lock
-                size={20}
-                className="absolute left-4 top-3 text-gray-400"
-              />
-
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
-                value={loginData.password}
-                onChange={handleChange}
                 placeholder="Enter password"
+                value={formData.password}
+                onChange={handleChange}
                 required
-                className="w-full rounded-xl border border-gray-300 py-3 pl-12 pr-12 outline-none focus:border-blue-500"
+                className="w-full px-4 py-3 border rounded-xl pr-12 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
 
               <button
                 type="button"
-                onClick={() =>
-                  setShowPassword(!showPassword)
-                }
-                className="absolute right-4 top-3 text-gray-500"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-4 text-gray-500"
               >
-                {showPassword ? (
-                  <EyeOff size={20} />
-                ) : (
-                  <Eye size={20} />
-                )}
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
 
             </div>
-
           </div>
 
-          {/* Remember Me */}
+          {/* Remember */}
+          <div className="flex justify-between items-center">
 
-          <div className="flex items-center justify-between">
+            <label className="flex items-center gap-2 text-sm">
 
-            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                name="remember"
+                checked={formData.remember}
+                onChange={handleChange}
+              />
 
-              <input type="checkbox" />
-
-              <span className="text-sm text-gray-600">
-                Remember me
-              </span>
+              Remember Me
 
             </label>
 
-            <button
-              type="button"
-              className="text-sm font-medium text-blue-600 hover:underline"
+            <Link
+              to="/forgot-password"
+              className="text-indigo-600 text-sm hover:underline"
             >
               Forgot Password?
-            </button>
+            </Link>
 
           </div>
 
-          {/* Login */}
+          {/* Button */}
 
           <button
             type="submit"
-            className="w-full rounded-xl bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700"
+            disabled={loading}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 transition text-white py-3 rounded-xl font-semibold"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
 
         </form>
 
-        <p className="mt-8 text-center text-gray-600">
+        <p className="text-center text-gray-500 mt-6">
 
           Don't have an account?
 
           <Link
             to="/register"
-            className="ml-2 font-semibold text-blue-600 hover:underline"
+            className="text-indigo-600 font-semibold ml-1"
           >
             Register
           </Link>
@@ -194,6 +166,4 @@ const Login = () => {
 
     </div>
   );
-};
-
-export default Login;
+}
